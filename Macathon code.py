@@ -2,11 +2,3 @@
 #
 #Authors: Lauren Hermann and Fatima Baghdadi
 #Date Updated: 26/04/2025
-
-work = int("What is your avaibality? (y or n)" )
-
-if work == "y":
-    input("when? ")
-else:
-    pass
-
