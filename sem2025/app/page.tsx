@@ -105,7 +105,7 @@ const Page = () => {
               <span className="mr-2">►</span>
               <span className="text-gray-800">Meeting</span>
               <span className="text-xs text-gray-700 ml-2">(READ ONLY)</span>
-              <span className="ml-auto text-green-600">✓</span>
+              <span className="ml-auto text-red-600">!</span>
             </div>
           </div>
           
