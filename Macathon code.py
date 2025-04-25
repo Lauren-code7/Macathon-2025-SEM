@@ -34,7 +34,7 @@ class CateringOption:
     name: str
     location: str
     price_range: str  # "$", "$$", etc.
-    distance_to_campus: float  # in minutes walking
+    walking_times: Dict[str, float]  # location_name -> walking time in minutes
 
 @dataclass
 class StudyGroup:
@@ -46,57 +46,87 @@ class StudyGroup:
     
 # Sample data (in a real system, this would come from a database)
 students = [
-    Student(1, "Alice Smith", "alice@university.edu", "Computer Science", True, 
+    Student(1, "Alice Smith", "asmith0001@student.monash.edu", "Computer Science", True, 
             {"Monday": ["morning"], "Wednesday": ["afternoon"], "Friday": ["morning", "afternoon"]}),
-    Student(2, "Bob Johnson", "bob@university.edu", "Computer Science", True, 
+    Student(2, "Bob Johnson", "bjohnson0002@student.monash.edu", "Computer Science", True, 
             {"Monday": ["afternoon"], "Wednesday": ["morning", "afternoon"], "Thursday": ["morning"]}),
-    Student(3, "Charlie Brown", "charlie@university.edu", "Biology", True, 
+    Student(3, "Charlie Brown", "cbrown0003@student.monash.edu", "Biology", True, 
             {"Tuesday": ["morning"], "Wednesday": ["afternoon"], "Friday": ["morning"]}),
-    Student(4, "Diana Prince", "diana@university.edu", "Biology", True, 
+    Student(4, "Diana Prince", "dprince0004@student.monash.edu", "Biology", True, 
             {"Monday": ["morning"], "Wednesday": ["afternoon"], "Friday": ["morning"]}),
-    Student(5, "Evan Williams", "evan@university.edu", "Physics", True, 
+    Student(5, "Evan Williams", "ewilliams0005@student.monash.edu", "Physics", True, 
             {"Monday": ["morning", "afternoon"], "Thursday": ["afternoon"], "Friday": ["morning"]}),
-    Student(6, "Fiona Apple", "fiona@university.edu", "Physics", False,  # No membership
+    Student(6, "Fiona Apple", "fapple0006@student.monash.edu", "Physics", False,  # No membership
             {"Tuesday": ["morning", "afternoon"], "Wednesday": ["morning"], "Friday": ["afternoon"]}),
-    Student(7, "Greg House", "greg@university.edu", "Medicine", True, 
+    Student(7, "Greg House", "ghouse0007@student.monash.edu", "Medicine", True, 
             {"Monday": ["afternoon"], "Wednesday": ["morning", "afternoon"], "Thursday": ["morning"]}),
-    Student(8, "Helen Troy", "helen@university.edu", "Medicine", True, 
+    Student(8, "Helen Troy", "htroy0008@student.monash.edu", "Medicine", True, 
             {"Tuesday": ["morning"], "Wednesday": ["afternoon"], "Friday": ["morning"]}),
-    Student(9, "Ivan Drago", "ivan@university.edu", "Computer Science", True, 
+    Student(9, "Ivan Drago", "idrago0009@student.monash.edu", "Computer Science", True, 
             {"Monday": ["morning"], "Wednesday": ["morning", "afternoon"], "Friday": ["morning"]}),
 ]
 
 locations = [
-    Location(1, "Library Study Room A", 8, 
+    Location(1, "C1 Leacture Theatre", 8, 
              {"Monday": ["morning", "afternoon"], "Tuesday": ["morning", "afternoon"], 
               "Wednesday": ["morning", "afternoon"], "Thursday": ["morning", "afternoon"], 
               "Friday": ["morning", "afternoon"]}),
-    Location(2, "Computer Lab 101", 15, 
+    Location(2, "Matherson Collaberative room", 15, 
              {"Monday": ["afternoon"], "Tuesday": ["morning"], 
               "Wednesday": ["morning", "afternoon"], "Thursday": ["afternoon"], 
               "Friday": ["morning"]}),
-    Location(3, "Science Building Room 305", 10, 
+    Location(3, "LTB G29", 10, 
              {"Monday": ["morning"], "Tuesday": ["afternoon"], 
               "Wednesday": ["morning"], "Thursday": ["morning", "afternoon"], 
               "Friday": ["afternoon"]}),
-    Location(4, "Student Union Meeting Room", 20, 
+    Location(4, "LTB G30", 20, 
              {"Monday": ["morning", "afternoon"], "Wednesday": ["afternoon"], 
               "Friday": ["morning", "afternoon"]}),
 ]
 
 catering_options = [
-    CateringOption("Campus Cafe", "Student Union Building", "$", 2),
-    CateringOption("Green Salads", "Science Building", "$$", 0),
-    CateringOption("Pizza Corner", "Off-campus (North)", "$", 5),
-    CateringOption("Sandwich Express", "Library Ground Floor", "$", 1),
-    CateringOption("Healthy Bites", "Sports Complex", "$$", 7),
-    CateringOption("Taco Truck", "Engineering Parking Lot", "$", 3),
+    CateringOption("GYG", "Campus Centre", "$", {
+        "C1 Leacture Theatre": 2,
+        "Matherson Collaberative room": 4,
+        "LTB G29": 6,
+        "LTB G30": 6,
+    }),
+    CateringOption("Subway", "Campus Centre", "$$", {
+        "C1 Leacture Theatre": 2,
+        "Matherson Collaberative room": 4,
+        "LTB G29": 6,
+        "LTB G30": 6,
+    }),
+    CateringOption("Rolled", "Campus Centre", "$", {
+        "C1 Leacture Theatre": 2,
+        "Matherson Collaberative room": 4,
+        "LTB G29": 6,
+        "LTB G30": 6,
+    }),
+    CateringOption("Sandwich Express", "Library Ground Floor", "$", {
+        "C1 Leacture Theatre": 1,
+        "Matherson Collaberative room": 2,
+        "LTB G29": 4,
+        "LTB G30": 3,
+    }),
+    CateringOption("Healthy Bites", "Sports Complex", "$$", {
+        "C1 Leacture Theatre": 7,
+        "Matherson Collaberative room": 10,
+        "LTB G29": 9,
+        "LTB G30": 8,
+    }),
+    CateringOption("Taco Truck", "Engineering Parking Lot", "$", {
+        "C1 Leacture Theatre": 3,
+        "Matherson Collaberative room": 5,
+        "LTB G29": 2,
+        "LTB G30": 2,
+    }),
 ]
 
 # Email configuration (replace with actual SMTP settings)
-SMTP_SERVER = "smtp.university.edu"
+SMTP_SERVER = "smtp.monash.edu"
 SMTP_PORT = 587
-SENDER_EMAIL = "study.groups@university.edu"
+SENDER_EMAIL = "study.groups@sem.org.au"
 SENDER_PASSWORD = "password123"  # In a real system, use environment variables
 
 def verify_membership(student: Student) -> bool:
@@ -307,7 +337,7 @@ def send_student_email(student: Student, group: StudyGroup):
     Please arrive 5 minutes before the session starts.
     
     Best regards,
-    University Study Group Program
+    SEM 
     """
     
     send_email(student.email, subject, body)
@@ -315,12 +345,16 @@ def send_student_email(student: Student, group: StudyGroup):
 def send_organizer_email(group: StudyGroup):
     """Send booking confirmation and catering recommendations to organizers"""
     time_info = "9:00 AM - 12:00 PM" if group.time_slot == "morning" else "1:00 PM - 4:00 PM"
-    
-    # Find nearby catering options (would be more sophisticated in a real system)
-    recommended_catering = random.sample(catering_options, min(3, len(catering_options)))
-    
+    location_name = group.location.name
+
+    # Sort catering options by walking time from the location
+    nearby_catering = sorted(
+        catering_options,
+        key=lambda c: c.walking_times.get(location_name, float('inf'))
+    )[:3]  # Recommend top 3
+
     subject = f"Study Group #{group.id} - Booking Confirmation"
-    
+
     body = f"""
     Study Group #{group.id} has been successfully created:
     
@@ -330,15 +364,16 @@ def send_organizer_email(group: StudyGroup):
     Group Size: {len(group.students)}
     
     Student Information:
-    {''.join([f"- {s.name}, {s.degree}, {s.email}" + "\n" for s in group.students])}
+    {''.join([f"\t- {s.name}, {s.degree}, {s.email}\n" for s in group.students])}
     
-    Recommended Catering Options:
-    {''.join([f"- {c.name} ({c.price_range}) - {c.location}, {c.distance_to_campus} min walking distance" + "\n" for c in recommended_catering])}
+    Recommended Catering Options (by proximity):
+    {''.join([f"\t- {c.name} ({c.price_range}) - {c.location}, {c.walking_times.get(location_name, 'N/A')} min walk\n" for c in nearby_catering])}
     
     Please confirm catering arrangements 24 hours before the session.
     """
-    
-    send_email(SENDER_EMAIL, subject, body)  # Sent to organizers
+
+    send_email(SENDER_EMAIL, subject, body)
+
 
 def send_email(recipient: str, subject: str, body: str):
     """Send an email (For demonstration - in a real system this would connect to SMTP)"""
