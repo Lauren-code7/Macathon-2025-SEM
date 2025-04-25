@@ -102,10 +102,10 @@ const Page = () => {
             </div>
             
             <div className="pl-4 pr-2 py-1 border-b border-gray-200 flex items-center">
-              <span className="mr-2">►</span>
+              <span className="mr-2 text-yellow-400" >►</span>
               <span className="text-gray-800">Meeting</span>
               <span className="text-xs text-gray-700 ml-2">(READ ONLY)</span>
-              <span className="ml-auto text-red-600">!</span>
+              <span className="ml-auto flex items-center justify-center bg-red-600 text-white rounded-full w-6 h-6 font-bold">!</span>
             </div>
           </div>
           
