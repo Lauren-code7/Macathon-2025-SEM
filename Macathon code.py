@@ -446,8 +446,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-=======
->>>>>>> Stashed changes
 
 @dataclass
 class CateringOption:
