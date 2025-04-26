@@ -1,9 +1,16 @@
 #<<<<<<< Updated upstream
 #Updated upstream
+
 #Coding Program for Macathon 2025 
-#
+#A system in which students pick dates they are available from a morning or afternoon time during the week on Allocate+. 
+#This will then take this inofrmation and the relevant information stored in Monash WES (Name, Degree, Membership information, ID and email) to assign them
+#to a group that fits their availability, but has at least 1 other member from their degree.
+#Emails are then sent to the student with the amount of people in their group,and the date and time of their weekly meeting along with the location on 
+#campus, which is chosen from a list and booked by the system. Another email is sent to the SEM coordinators to inform them of any bookings made, the 
+#groups and their members and some ideas for catering based on time to get to them and cost. 
+
 #Authors: Lauren Hermann and Fatima Baghdadi
-#Date Updated: 26/04/2025
+#Date Updated: 25/04/2025
 
 import datetime
 import smtplib
