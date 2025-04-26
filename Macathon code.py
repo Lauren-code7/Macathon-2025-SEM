@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+#<<<<<<< Updated upstream
 #Updated upstream
 #Coding Program for Macathon 2025 
 #
@@ -23,7 +23,7 @@ class Student:
     has_membership: bool
     availability: Dict[str, List[str]]  # {"Monday": ["morning", "afternoon"], "Tuesday": ["morning"], ...}
 
-=======
+#=======
 import datetime
 import smtplib
 import random
@@ -42,14 +42,14 @@ class Student:
     has_membership: bool
     availability: Dict[str, List[str]]  # {"Monday": ["morning", "afternoon"], "Tuesday": ["morning"], ...}
 
->>>>>>> Stashed changes
+#>>>>>>> Stashed changes
 @dataclass
 class Location:
     id: int
     name: str
     capacity: int
     availability: Dict[str, List[str]]  # {"Monday": ["morning", "afternoon"], "Tuesday": ["morning"], ...}
-<<<<<<< Updated upstream
+#<<<<<<< Updated upstream
 
 @dataclass
 class CateringOption:
